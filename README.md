@@ -1,4 +1,6 @@
-# Projet en C
+# Projet en C pour ajc 
+
+l'objctif est d'expérimenter les notions apprises dans le cadre de la formation. Voici l'intitulé :
 
 ## Partie 1
 
