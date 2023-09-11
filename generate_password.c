@@ -18,33 +18,6 @@ typedef enum {
     FILE_DOC
 } FileType;
 
-FileType get_file_header(FILE *file) {
-    uint8_t header[4];
-    size_t read_size;
-
-    // Lire les 4 premiers octets du fichier
-    read_size = fread(header, 1, 4, file);
-
-    if (read_size != 4) {
-        // Le fichier est trop court pour être identifié
-        return FILE_UNKNOWN;
-    }
-
-    // Vérifier le format en fonction des en-têtes
-    if (header[0] == 0xFF && header[1] == 0xD8) {
-        return FILE_JPG;
-    } else if (header[0] == 0x89 && header[1] == 0x50 && header[2] == 0x4E && header[3] == 0x47) {
-        return FILE_PNG;
-    } else if (header[0] == 0x4D && header[1] == 0x5A) {
-        return FILE_EXE;
-    } else if (header[0] == 0x25 && header[1] == 0x50 && header[2] == 0x44 && header[3] == 0x46) {
-        return FILE_PDF;
-    } else if (header[0] == 0xD0 && header[1] == 0xCF && header[2] == 0x11 && header[3] == 0xE0) {
-        return FILE_DOC;
-    } else {
-        return FILE_UNKNOWN;
-    }
-}
 
 
 int is_special_character(char c)
@@ -167,6 +140,55 @@ void cypher_rotate(char *string, int rotation, int translation_length) {
             string[i] = ((string[i] - base + shift) % offset + offset) % offset + base;
         }
         i++;
+    }
+}
+
+FileType get_file_header(FILE *file) {
+    uint8_t header[4];
+    size_t read_size;
+
+    // Lire les 4 premiers octets du fichier
+    read_size = fread(header, 1, 4, file);
+
+    if (read_size != 4) {
+        // Le fichier est trop court pour être identifié
+        return FILE_UNKNOWN;
+    }
+
+    // Vérifier le format en fonction des en-têtes
+    if (header[0] == 0xFF && header[1] == 0xD8) {
+        return FILE_JPG;
+    } else if (header[0] == 0x89 && header[1] == 0x50 && header[2] == 0x4E && header[3] == 0x47) {
+        return FILE_PNG;
+    } else if (header[0] == 0x4D && header[1] == 0x5A) {
+        return FILE_EXE;
+    } else if (header[0] == 0x25 && header[1] == 0x50 && header[2] == 0x44 && header[3] == 0x46) {
+        return FILE_PDF;
+    } else if (header[0] == 0xD0 && header[1] == 0xCF && header[2] == 0x11 && header[3] == 0xE0) {
+        return FILE_DOC;
+    } else {
+        return FILE_UNKNOWN;
+    }
+}
+
+
+int is_file_png(FILE *file) {
+    uint8_t header[8];
+    const uint8_t png_signature[] = {137, 80, 78, 71, 13, 10, 26, 10}; // Signature PNG
+
+    // Lire les 8 premiers octets du fichier
+    size_t read_size = fread(header, 1, 8, file);
+
+    if (read_size != 8) {
+        // Le fichier est trop court pour être un fichier PNG
+        return 0;
+    }
+
+    // Comparer les 8 premiers octets avec la signature PNG
+    if (memcmp(header, png_signature, 8) == 0) {
+        return 1; // Le fichier est au format PNG
+    } else {
+        return 0; // Le fichier n'est pas au format PNG
     }
 }
 
