@@ -1,60 +1,52 @@
-# Projet en C pour ajc 
+Ecrire les programmes suivants:
 
-l'objctif est d'expérimenter les notions apprises dans le cadre de la formation. Voici l'intitulé :
+file_merge
+html_checker
+base_converter
+lipsum (facultatif)
+file_merge
+Programme fusionnant (concaténant) et "défusionnant" des fichiers. Le programme prendra par la ligne de commande le noms de fichiers à fusionner. Sortie: fichier unique créé par la fusion des fichiers pris en entrée
+Le programme, par une option -u, devra "unmerge" le fichier
 
-## Partie 1
+Trouver un moyen de stocker dans le fichier de sortie, les informations vous permettant de "défusionner" les fichiers par la suite.
+Des fichiers de différents types pourront être fusionnés.
 
-Dans un cadre de renforcement sécuritaire de son infrastructure, la société SecU vous charge de développer une bibliothèque de fonctions en langage C.  
+Exemples d'utilisation de la commande:
+file_merge file1.png file2.png file3.pdf => output: fichier files.merge
+file_merge -u files.merge => output: fichiers file1.png file2.png file3.pdf
 
-- generate_password
-- is_password_strong
-- cypher_rotate
-- get_file_header
-- is_file_png
-- html_minifier
 
-<br>
+html_checker
+Le programme vérifiant le bon format (partiel) d'un fichier html. Le programme vérifiera que chaque balise ouvrante parmis celles recherchées est accompagnée de la balise fermante correspondante.
+Balises recherchées:
 
-__generate_password__  
-Entrée: longueur du mot de passe, présence de caractères spéciaux (0/1)  
-Sortie: chaîne de caractères aléatoire contenant des lettres de l’alphabet (minuscule et majuscule), des chiffres et, selon paramétrage, des caractères spéciaux.  
-Exemple d’utilisation: generate_password(10, 1) => pM2ga_bn1#  
-<br>
+<strong>, <p>, <h1>, <h2>, <a>
+Exemples d'utilisation de la commande:
+html_checker file.html => output: ok
+html_checker file_bad.html => output: not ok
 
-__is_password_strong__  
-Entrée: chaîne de caractères  
-Sortie: 1 si la chaîne réunit toutes ces conditions:  
-- de longueur 10 au moins
-- contient au moins une majuscule
-- contient au moins un chiffre
-- contient au moins un caractère spécial  
 
-0 sinon.  
-Exemple d’utilisation: is_password_strong(“abc”) => 0   
-<br>
+base_converter
+Programme donnant deux autres bases à partir d'une fournie en entrée. Bases prises en compte: binaire (2), décimale (10), hexadécimale (16)
+Option indiquant la base de départ: -b (2, 10, 16)
 
-__cypher_rotate__  
-Implémentation du chiffrement par décalage/rotation (cf chiffre de César)  
-Entrée: chaîne de caractères, sens de la rotation, longueur du décalage  
-Sortie: chaîne de caractères avec décalage des caractères  
-La rotation ne se fera que pour les lettres de l’alphabet minuscules.  
-Exemple d’utilisation: cypher_rotate(“ab2aZ”, 0, 1) => “bc2bZ”    
-Lien (Chiffre de César en python): https://www.tutorialspoint.com/cryptography_with_python/cryptography_with_python_caesar_cipher.htm  
-<br>
+Exemples d'utilisation de la commande:
+base_converter 42 -b 10 => output: 101010 (2) 2A (16)
+base_converter 2A -b 16 => output: 101010 (2) 42 (10)
 
-__get_file_header__  
-Entrée: fichier binaire  
-Sortie: format de fichier trouvé (parmi ceux recherchés)  
-On se limitera à rechercher les formats de fichier suivants: jpg, png, exe, pdf, doc  
-Lien: https://en.wikipedia.org/wiki/List_of_file_signatures  
-<br>
 
-__is_file_png__  
-Entrée: fichier binaire  
-Sortie: 1 si le fichier est au format PNG, 0 sinon  
-<br>
+lipsum (facultatif)
+Programme générant du texte aléatoire. En vous inspirant du site suivant: https://www.lipsum.com/ écrire un programme permettant de générer un nombre de mots ou de paragraphes via des options de ligne de commande. Ces mots ou paragraphes seront du texte "lipsum", c'est à dire des termes inspirés du latin choisis au hasard parmi un dictionnaire de mots.
+Les paragraphes seront de longueur variable.
 
-__html_minifier__  
-Entrée: fichier html avec indentations et sauts de ligne  
-Sortie: fichier html sans indentations et sans sauts de ligne    
-Vous pouvez tester la fonction sur le fichier projet.html présent dans le dépôt  
+Exemples d'utilisation de la commande:
+lipsum -w 5 => output (5 mots): Suspendisse at risus nisi. Nullam.
+lipsum -p 3 => output (3 paragraphes):
+
+Aenean molestie ut turpis at semper. Sed tincidunt consectetur finibus. Nullam nec nunc pretium, ullamcorper sem sed, sodales mi. In iaculis pretium urna, ac laoreet magna auctor ac.
+
+Morbi dapibus sapien quis euismod rutrum. Pellentesque placerat risus eu ultricies malesuada. Praesent eu ex maximus, porttitor magna sit amet, rutrum neque. Maecenas eleifend tincidunt congue. Nulla efficitur lectus mauris, et commodo velit placerat eu. Quisque blandit lectus tristique, porta velit ac, faucibus massa. Fusce eu rutrum metus. Ut mollis velit velit, sed porttitor justo imperdiet nec. Quisque vehicula augue consectetur elit egestas sodales. Phasellus elementum, sapien ut gravida vestibulum, felis est dictum est, finibus vehicula felis eros eget risus. Mauris gravida leo at felis ornare, eu pellentesque metus semper. Proin id convallis massa. Etiam elementum, nibh ut dignissim finibus, leo tellus vulputate felis, at pellentesque lacus est ut sem. Quisque et lacinia quam.
+
+Integer efficitur sollicitudin sodales. Vivamus feugiat nibh nec est vestibulum, blandit dictum felis semper. Ut tristique orci vitae ullamcorper euismod. Pellentesque in malesuada ante. Cras convallis feugiat nisi viverra vulputate. Aliquam accumsan vulputate justo porta euismod. Phasellus ligula orci, ullamcorper et ultricies vel, rutrum vitae leo. Vestibulum eleifend turpis a justo eleifend ultricies. Duis nec dapibus urna, faucibus pharetra velit.
+
+
